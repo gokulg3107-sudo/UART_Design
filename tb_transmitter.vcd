@@ -1,0 +1,41 @@
+$date
+	Fri May 15 09:57:19 2026
+$end
+$version
+	QuestaSim Version 10.6c
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_transmitter $end
+
+$scope task apply_reset $end
+$upscope $end
+
+$scope task transmit_byte $end
+$upscope $end
+
+$scope task capture_serial $end
+$upscope $end
+
+$scope task check_done $end
+$upscope $end
+
+$scope task check_serial $end
+$upscope $end
+
+$scope task check_idle_after_reset $end
+$upscope $end
+
+$scope begin walk1 $end
+$upscope $end
+
+$scope begin walk0 $end
+$upscope $end
+
+$scope begin inc_seq $end
+$upscope $end
+
+$scope module dut $end
+$var reg 2 ! current_state [1:0] $end
