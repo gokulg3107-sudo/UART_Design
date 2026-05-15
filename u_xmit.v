@@ -1,9 +1,9 @@
 `include "inc.h"
-module transmitter(uart_clk, sys_rst, xmitH, xmit_dataH, xmit_done, uart_XMIT_dataH);
+module transmitter(uart_clk, sys_rst, xmitH, xmit_dataH, xmit_done, xmit_active, uart_XMIT_dataH);
 
 input uart_clk, sys_rst, xmitH;
 input [`width - 1:0] xmit_dataH;
-output reg xmit_done, uart_XMIT_dataH;
+output reg xmit_done, uart_XMIT_dataH, xmit_active;
 
 localparam [1:0] idle = 0, send_data = 1, data_sent = 2;
 reg [1:0] current_state, next_state;
@@ -22,8 +22,14 @@ reg [3:0] count;
 always @(posedge uart_clk or posedge sys_rst) begin
     if(sys_rst) count <= 0;
     else begin
-        if(current_state == 2'd1) count <= count + 1;
-        else count <= 0;
+        if(current_state == 2'd1)begin
+		 count <= count + 1;
+		 xmit_active = 1'b1;
+	end
+        else begin
+		 count <= 0;
+		xmit_active <= 1'b0;
+	end
     end
 end
 
