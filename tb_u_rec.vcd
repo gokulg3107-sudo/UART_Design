@@ -1,0 +1,41 @@
+$date
+	Thu May 14 14:35:16 2026
+$end
+$version
+	QuestaSim Version 10.6c
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_u_rec $end
+
+$scope task apply_reset $end
+$upscope $end
+
+$scope task send_uart_frame $end
+$upscope $end
+
+$scope task send_bad_stop_frame $end
+$upscope $end
+
+$scope task check_output $end
+$upscope $end
+
+$scope task check_idle $end
+$upscope $end
+
+$scope begin walk1_block $end
+$upscope $end
+
+$scope begin walk0_block $end
+$upscope $end
+
+$scope begin inc_block $end
+$upscope $end
+
+$scope begin dec_block $end
+$upscope $end
+
+$scope module dut $end
+$var reg 2 ! current_state [1:0] $end
