@@ -1,8 +1,9 @@
 `include "inc.h"
-module u_rec(uart_clk, sys_rst, uart_REC_dataH, rec_dataH);
+module u_rec(uart_clk, sys_rst, uart_REC_dataH, rec_dataH, rec_busy);
 input uart_clk, sys_rst;
 input uart_REC_dataH;
 output reg [`width - 1: 0] rec_dataH;
+output reg rec_busy;
 reg [3:0] count;
 reg serializer_ff1, serializer_ff2;
 reg [`width - 1: 0] temp_data;
@@ -39,10 +40,14 @@ always @(posedge uart_clk or posedge sys_rst)begin
         if(sys_rst) count <= 0;
         else begin
                 if(current_state == data_receiving) begin
+			rec_busy <= 1'b1;
                         if(count == `width - 1) count <= 0;
                         else count <= count + 1;
-                end else
+                end 
+		else begin
                         count <= 0;
+			rec_busy <= 1'b0;
+		end
         end
 end
 
@@ -67,6 +72,5 @@ always @(posedge uart_clk or posedge sys_rst)begin
 	end
 	else rec_readyH <= 1'b0;
 end
-
 
 endmodule
