@@ -56,7 +56,7 @@ always@(posedge uart_clk or posedge sys_rst)begin
         if(sys_rst) temp_data <= 0;
         else begin
                 case(current_state)
-                        2'b1: temp_data <= {serializer_ff2, temp_data[`width - 1:1]};
+			2'd1: temp_data <= {temp_data[`width-2:0], serializer_ff2};
                         default: temp_data <= temp_data;
                 endcase
         end
