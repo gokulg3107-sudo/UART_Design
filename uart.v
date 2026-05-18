@@ -3,6 +3,7 @@
 module uart(
     input  wire              sys_clk,
     input  wire              sys_rst,
+    input wire uart_REC_dataH,
     input  wire              xmitH,
     input  wire [`width-1:0] xmit_dataH,
     output wire              uart_XMIT_dataH,
@@ -38,7 +39,7 @@ transmitter tx (
 u_rec receiver_module (
     .uart_clk        (baud_clk),
     .sys_rst         (sys_rst),
-    .uart_REC_dataH  (uart_XMIT_dataH),
+    .uart_REC_dataH  (uart_REC_dataH),
     .rec_dataH       (rec_dataH),
     .rec_busyH       (rec_busy),
     .rec_readyH      (rec_readyH)
