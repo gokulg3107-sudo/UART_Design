@@ -19,9 +19,7 @@ always @(posedge uart_clk or negedge sys_rst) begin
     else          count_4bit <= count_4bit + 1'b1;
 end
 
-// ── Dual-rank synchroniser + mid-bit sample enable ───────────
-// Sample at count_4bit==7; ff2 sees the stable value one clock later (==8)
-// state_transition_en pulses for one clock at count_4bit==7
+//Dual-rank synchroniser  
 always @(posedge uart_clk or negedge sys_rst) begin
     if (~sys_rst) begin
         serializer_ff1      <= 1'b1;
@@ -39,21 +37,19 @@ always @(posedge uart_clk or negedge sys_rst) begin
     end
 end
 
-// state_transition_en pulses (count_4bit==7, seen by FSM at ==8 after ff2), count already reflects the completed bit.
+// state_transition_en pulses 
 always @(posedge uart_clk or negedge sys_rst) begin
     if (~sys_rst) count <= 0;
     else begin
-        if (current_state == receiving_data && count_4bit == 4'd6)
-            count <= count + 1'b1;
-        else if (current_state != receiving_data)
-            count <= 0;
+        if (current_state == receiving_data && count_4bit == 4'd6) count <= count + 1'b1;
+        else if (current_state != receiving_data) count <= 0;
     end
 end
 
 // State register (advances only on state_transition_en) 
 always @(posedge uart_clk or negedge sys_rst) begin
     if (~sys_rst) current_state <= idle;
-    else          current_state <= state_transition_en ? next_state : current_state;
+    else current_state <= state_transition_en ? next_state : current_state;
 end
 
 // Next-state logic
@@ -84,7 +80,7 @@ end
 //Shift register (captures data bits) 
 always @(posedge uart_clk or negedge sys_rst) begin
     if (~sys_rst) rec_dataH <= 0;
-    else if (current_state == receiving_data && state_transition_en)
+    else if ((current_state == receiving_data || current_state == stopbit) && state_transition_en)
         rec_dataH <= {serializer_ff2, rec_dataH[`width-1:1]};
 end
 

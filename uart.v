@@ -1,5 +1,4 @@
 `include "inc.h"
-
 module uart(
     input  wire              sys_clk,
     input  wire              sys_rst,
