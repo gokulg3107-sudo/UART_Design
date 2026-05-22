@@ -78,7 +78,6 @@ This UART module consists of:
 - Verilog HDL
 - Icarus Verilog
 - GTKWave
-- VS Code
 
 ---
 
